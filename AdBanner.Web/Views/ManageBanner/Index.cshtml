@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AdBanner.Data.ViewModel.BannerViewModel>
+@{
+    ViewData["Title"] = "Manage Banner";
+}
+<div>
+    <div class="nk-block-head">
+        <div class="content">
+            <h4 class="nk-block-title">Banner</h4>       
+        </div>
+    </div>
+    
+    <div class="card">
+       
+        <div style="text-align:right;padding:10px;">
+            @Html.ActionLink("Add New", "AddEdit", new { controller = "ManageBanner" }, new { @class = "btn btn-primary" })
+        </div>
+
+        <div class="card-body">
+            <table class="w3-table w3-striped w3-bordered" width="100%">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Title</th>
+                        <th>Online</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int rowNo = 0;}
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@(rowNo += 1)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Online)</td>
+                        <td>
+                            <a href="@Url.Action("AddEdit", "ManageBanner", new { Id =item.Id })" class="btn btn-secondary btn-sm"><em class="icon ni ni-focus"></em><span>Edit</span></a>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 
+

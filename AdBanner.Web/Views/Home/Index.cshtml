@@ -1,0 +1,131 @@
+﻿@model IEnumerable<AdBanner.Data.ViewModel.BannerViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<link href="~/dist/css/unslider.css" rel="stylesheet" />
+<link href="~/dist/css/unslider-dots.css" rel="stylesheet" />
+<style>
+    .banner {
+        width: 700px;
+        background: black;
+        color: white;
+        position: relative;
+        overflow: auto;
+        font-size: 36px;
+        text-align: center;
+    }
+
+        .banner li {
+            list-style: none;
+        }
+
+        .banner ul li div {
+            float: left;
+            height: 250px;
+            width:100%;
+            padding-top: 150px;
+        }
+
+    ul {
+        margin-left: 25%;
+    }
+
+    .unslider-arrow {
+        left: 26%;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Banner Ad Tracking</h3>
+    </div>
+    <div class="card-body">
+        <div class="banner">
+
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li class="adClick">
+                        <a href="@item.LinkUrl">
+                            <div style="background-image: url('@item.ImageUrl');"> @item.Title</div>
+                        </a>                       
+                        <input type="hidden" id="@("m_" + item.Id)" name="@item.Title" value="@item.Id" />
+                    </li>
+                }
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    @*<script src="//code.jquery.com/jquery-latest.min.js"></script>*@
+
+<script>
+
+    //function to rotate banners
+    $(function () {
+        setInterval(function () {
+            var slidey = $('.banner').unslider();
+                data = slidey.data('unslider');
+            data.next();
+        }, 3000);
+    });
+
+
+
+
+    //To determine click
+    $(".adClick").click(function () {
+
+        var val = $(this).find('input[type="hidden"]').val();
+     
+        if ($.cookie('adBanner_click_' + val) == null || $.cookie('adBanner_click_' + val) == '') {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("BannerClick", "Home")',
+                data: { bannerid: val },
+                dataType: "json",
+                success: function (response) {
+                    if (response.result) {                        
+                        $.cookie("expiry_click_" + val, "1",
+                            { expires: $.cookie("expiry_click_" + val) });
+                        $.cookie('adBanner_click_' + val, val + '_click');
+                    }
+                },
+                error: function (response) {
+                    alert(JSON.stringify(response));
+                }
+            });
+        }
+    });
+
+    //to determine impression
+    $('.adClick').each(function (i, item) {
+
+        var val = $(item).find('input[type="hidden"]').val();
+        
+        if ($.cookie('adBanner_display_' + val) == null || $.cookie('adBanner_display_' + val) == '') {            
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ImpressionView", "Home")',
+                data: { bannerid: val },
+                dataType: "json",
+                success: function (response) {
+                    if (response.result) {
+                        $.cookie('display_expiry_' + val,"1",
+                            { expires: $.cookie('display_expiry_' + val) });
+                        $.cookie('adBanner_display_' + val, val + '_display');
+                    }
+                }
+            });
+        }
+    });
+
+
+
+</script>
+
+}

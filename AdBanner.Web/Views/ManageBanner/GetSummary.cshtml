@@ -1,0 +1,66 @@
+﻿@model IEnumerable<AdBanner.Data.ViewModel.BannerStatsSummaryViewModel>
+@{
+    ViewData["Title"] = "Banner Tracking Summary";
+}
+
+
+
+<div class="nk-block-head">
+    <div class="nk-block-head-content">
+        <h4 class="title nk-block-title">Tracking Summary</h4>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <form method="post" novalidate enctype="multipart/form-data">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="form-label col-sm-3" for="email-address-1">Date</label>
+                    <div class="col-sm-3">
+                        <input type="date" class="form-control" name="date" id="date" />                       
+                    </div>
+                </div>
+                <div class="form-group">                    
+                    <div class="col-sm-3">
+                        <input type="submit" name="btnADD" class="btn btn-sm btn-primary btn-block" id="btnADD" value="Fetch Summary" />
+                    </div>
+                </div>
+            </div>
+                    
+                    
+        </form>
+
+        <table class="w3-table w3-striped w3-bordered" width="100%">
+            <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>Title</th>
+                    <th>Hour</th>
+                    <th>Click Per Hour</th>
+                    <th>Impression Per Hour</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int rowNo = 0;}
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@(rowNo += 1)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Hour)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ClickPerHour)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ImpressionPerHour)</td>                   
+                </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+

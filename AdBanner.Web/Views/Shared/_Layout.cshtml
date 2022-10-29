@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Ad Banner</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:25%">
+        <h3 class="w3-bar-item"><a asp-action="Index" class="text" asp-controller="Home">Ad Banner</a></h3>
+        <hr class="border" />
+        <a asp-action="Index" asp-controller="ManageBanner" class="w3-bar-item w3-button">Manager Banner</a>
+        <a asp-action="GetSummary" asp-controller="ManageBanner" class="w3-bar-item w3-button">Banner Ad Summary</a>       
+    </div>
+
+    <!-- Page Content -->
+    <div style="margin-left:25%">
+
+        <div class="w3-container">
+            <h1></h1>
+        </div>
+        <br />
+
+
+        <div class="w3-container">
+            @RenderBody()
+        </div>
+    </div>
+    <footer class="mt-auto border-top" style="margin-left:25%; margin-bottom:5%">
+        <div class="container">
+            &copy; 2022 - Ad Banner - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="~/dist/js/unslider-min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("Notyf")
+</body>
+</html>
