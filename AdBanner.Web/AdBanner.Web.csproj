@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="BannerImages\" />
+    <Folder Include="ErrorLog\" />
   </ItemGroup>
 
 </Project>
